@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard de Volume e Faturamento — Vitor Vieira Souza</title>
+<style>
+  :root{--bg:#0B1F33;--bg2:#13293D;--card:#16324A;--border:#1E3A56;--text:#F5F7FA;--muted:#9FB3C8;--accent:#5DA9C7;--accent2:#F4A261;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,-apple-system,sans-serif;line-height:1.6;}
+  .top{padding:24px;border-bottom:1px solid var(--border);}
+  .top a{color:var(--accent);text-decoration:none;font-size:14px;}
+  main{max-width:760px;margin:0 auto;padding:40px 20px 80px;}
+  h1{font-size:clamp(24px,4vw,34px);margin:0 0 6px;}
+  .tools{color:var(--accent);font-size:14px;margin-bottom:28px;}
+  h2{color:var(--accent2);font-size:13px;letter-spacing:2px;text-transform:uppercase;margin:36px 0 12px;}
+  p{color:var(--text);font-size:15.5px;margin:0 0 12px;}
+  .shots{display:flex;flex-direction:column;gap:18px;margin-top:8px;}
+  .shots img{width:100%;border-radius:8px;border:1px solid var(--border);display:block;}
+  .shots figcaption{color:var(--muted);font-size:13px;margin-top:6px;text-align:center;}
+  ul{color:var(--text);font-size:15.5px;padding-left:20px;margin:0;}
+  li{margin-bottom:6px;}
+  code{background:var(--bg2);border:1px solid var(--border);padding:2px 6px;border-radius:4px;font-size:13.5px;color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="top"><a href="index.html">← Voltar aos projetos</a></div>
+<main>
+  <h1>Dashboard de Volume e Faturamento</h1>
+  <div class="tools">Power BI · Tabela Dinâmica · Comparativos por Período</div>
+
+  <h2>O problema</h2>
+  <p>Acompanhar volume operacional e faturamento lado a lado, permitindo comparar períodos sem precisar cruzar planilhas manualmente.</p>
+
+  <h2>A lógica por trás</h2>
+  <p>O relatório foi separado em duas páginas com propósitos diferentes:</p>
+  <ul>
+    <li><strong>Volume</strong> — cards de indicadores, gráfico de colunas e uma tabela dinâmica para leitura detalhada linha a linha.</li>
+    <li><strong>Faturamento</strong> — gráfico de rosca e comparativos entre períodos, para leitura de proporção e evolução.</li>
+  </ul>
+  <p>A ideia foi manter cada página com uma pergunta clara: a de Volume responde "quanto se moveu", a de Faturamento responde "quanto isso representou em receita".</p>
+
+  <h2>Medidas DAX</h2>
+  <p>Diferente do Comercial, aqui a lógica de negócio está concentrada no próprio Power BI — o modelo usa medidas mais elaboradas, com filtros de contexto e janelas de tempo:</p>
+  <ul>
+    <li><strong>Qtd Cliente</strong> — <code>DISTINCTCOUNT(codigo_cliente)</code>. Conta clientes únicos, sem duplicar.</li>
+    <li><strong>Qtd Situação Contratos</strong> — <code>COUNT(situacao_contrato)</code>. Conta registros por situação do contrato (ativo, cancelado etc).</li>
+    <li><strong>Total Faturado</strong> — <code>CALCULATE(SUM(valor_contrato))</code>. Soma total faturado em contratos.</li>
+    <li><strong>TotalPago</strong> — soma o valor dos documentos apenas quando a data de pagamento não está vazia, isolando o que foi efetivamente pago do que só foi faturado.</li>
+    <li><strong>Total Faturado 2022</strong> — mesma soma de contratos, filtrada para o ano de 2022 com <code>YEAR(data_venda) = 2022</code>.</li>
+    <li><strong>Ticket Médio</strong> — <code>AVERAGE(valor_contrato)</code>. Valor médio por contrato.</li>
+    <li><strong>% Faturamento p/ empresa 2022</strong> — divide o faturado de 2022 no contexto atual pelo faturado de 2022 da empresa toda, usando <code>ALL()</code> para remover os filtros e obter o total geral como base de comparação.</li>
+    <li><strong>UltimaDataVenda</strong> — <code>MAX(data_venda)</code>. Data da venda mais recente registrada.</li>
+    <li><strong>Faturamento Últimos Meses</strong> — soma o faturamento numa janela móvel de 12 meses, usando <code>EOMONTH</code> para calcular a data de corte a partir da venda mais recente.</li>
+  </ul>
+
+  <h2>Print do relatório</h2>
+  <div class="shots">
+    <figure><img src="img/alares-capa.png" alt="Capa do dashboard de volume e faturamento"><figcaption>Capa</figcaption></figure>
+    <figure><img src="img/alares-volume.png" alt="Visão de volume de clientes e contratos"><figcaption>Visão de Volume</figcaption></figure>
+    <figure><img src="img/alares-faturamento.png" alt="Análise de faturamento"><figcaption>Análise de Faturamento</figcaption></figure>
+  </div>
+</main>
+</body>
+</html>

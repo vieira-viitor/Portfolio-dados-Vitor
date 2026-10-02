@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard Financeiro / Bancário — Vitor Vieira Souza</title>
+<style>
+  :root{--bg:#0B1F33;--bg2:#13293D;--card:#16324A;--border:#1E3A56;--text:#F5F7FA;--muted:#9FB3C8;--accent:#5DA9C7;--accent2:#F4A261;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,-apple-system,sans-serif;line-height:1.6;}
+  .top{padding:24px;border-bottom:1px solid var(--border);}
+  .top a{color:var(--accent);text-decoration:none;font-size:14px;}
+  main{max-width:760px;margin:0 auto;padding:40px 20px 80px;}
+  h1{font-size:clamp(24px,4vw,34px);margin:0 0 6px;}
+  .tools{color:var(--accent);font-size:14px;margin-bottom:28px;}
+  h2{color:var(--accent2);font-size:13px;letter-spacing:2px;text-transform:uppercase;margin:36px 0 12px;}
+  p{color:var(--text);font-size:15.5px;margin:0 0 12px;}
+  .shots{display:flex;flex-direction:column;gap:18px;margin-top:8px;}
+  .shots img{width:100%;border-radius:8px;border:1px solid var(--border);display:block;}
+  .shots figcaption{color:var(--muted);font-size:13px;margin-top:6px;text-align:center;}
+  ul{color:var(--text);font-size:15.5px;padding-left:20px;margin:0;}
+  li{margin-bottom:6px;}
+  code{background:var(--bg2);border:1px solid var(--border);padding:2px 6px;border-radius:4px;font-size:13.5px;color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="top"><a href="index.html">← Voltar aos projetos</a></div>
+<main>
+  <h1>Dashboard Financeiro / Bancário</h1>
+  <div class="tools">Power BI · DAX · Slicers Interativos</div>
+
+  <h2>O problema</h2>
+  <p>Dar visibilidade executiva sobre a carteira de clientes e a taxa de cancelamento, permitindo que quem está olhando filtre o período e o segmento sem precisar pedir um relatório novo toda vez.</p>
+
+  <h2>A lógica por trás</h2>
+  <p>O painel foi dividido em três páginas para separar contexto de análise:</p>
+  <ul>
+    <li><strong>Início</strong> — capa de apresentação do relatório.</li>
+    <li><strong>Overview</strong> — cards de indicadores-chave, gráfico de rosca e um combo chart combinando volume e evolução no tempo.</li>
+    <li><strong>% Cancelamento</strong> — foco na taxa de cancelamento isolada, para acompanhamento de tendência.</li>
+  </ul>
+  <p>Os slicers foram posicionados para funcionar em todas as páginas ao mesmo tempo, então filtrar por período ou segmento em uma tela já reflete nas outras.</p>
+
+  <h2>Medidas DAX</h2>
+  <p>Esse é o modelo com mais DAX dos três — quase toda a lógica de segmentação de clientes é feita por medidas, com bastante reaproveitamento de padrões:</p>
+  <ul>
+    <li><strong>Qtd Clientes / Total Clientes</strong> — <code>COUNT(id_cliente)</code>: contagem total de clientes na base.</li>
+    <li><strong>Clientes Ativos / Inativos</strong> — reaproveitam <code>[Qtd Clientes]</code> dentro de um <code>CALCULATE</code>, filtrando pelo campo <code>cliente_ativo</code>.</li>
+    <li><strong>Clientes Cancelados</strong> — mesma lógica, filtrando <code>churn = "Cancelou"</code>.</li>
+    <li><strong>% Taxa Churn</strong> — <code>DIVIDE([Clientes Cancelados], [Qtd Clientes])</code>: percentual de clientes que cancelaram sobre o total.</li>
+    <li><strong>Médias segmentadas</strong> — o padrão se repete para saldo, salário, score e idade: cada uma tem uma versão geral e versões filtradas por <code>cliente_ativo = "sim"</code> ou <code>churn = "cancelou"</code>, permitindo comparar o perfil de quem ficou com o de quem cancelou (ex: Salário Médio ativos, Idade Média cancelados, Score Médio cancelados, Saldo Médio cancelado).</li>
+    <li><strong>Saldo Total</strong> — <code>SUM(saldo)</code>: soma geral, sem filtro.</li>
+    <li><strong>Produtos Médios</strong> — <code>AVERAGE(qtd_produtos)</code>: média de produtos contratados por cliente.</li>
+  </ul>
+
+  <h2>Print do relatório</h2>
+  <div class="shots">
+    <figure><img src="img/banco-capa.png" alt="Capa do dashboard financeiro"><figcaption>Capa</figcaption></figure>
+    <figure><img src="img/banco-overview.png" alt="Overview de clientes ativos"><figcaption>Overview (ativos)</figcaption></figure>
+    <figure><img src="img/banco-cancelamento.png" alt="Painel de % de cancelamento"><figcaption>% Cancelamento</figcaption></figure>
+  </div>
+</main>
+</body>
+</html>
