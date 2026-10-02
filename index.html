@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vitor Vieira Souza — Portfólio de Dados</title>
+<style>
+  :root{--bg:#0B1F33;--bg2:#13293D;--card:#16324A;--border:#1E3A56;--text:#F5F7FA;--muted:#9FB3C8;--accent:#5DA9C7;--accent2:#F4A261;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:"Segoe UI",system-ui,-apple-system,sans-serif;line-height:1.55;}
+  header{padding:56px 24px 32px;text-align:center;border-bottom:1px solid var(--border);}
+  header h1{margin:0 0 6px;font-size:clamp(28px,5vw,42px);}
+  header p{margin:0;color:var(--muted);font-size:16px;}
+  .links{margin-top:18px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+  .links a{color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:8px 16px;border-radius:20px;font-size:14px;}
+  main{max-width:880px;margin:0 auto;padding:40px 20px 80px;}
+  h2.section{color:var(--accent2);font-size:13px;letter-spacing:2px;text-transform:uppercase;margin:48px 0 18px;}
+  a.card{display:block;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin-bottom:18px;text-decoration:none;color:inherit;transition:border-color .15s;}
+  a.card:hover{border-color:var(--accent);}
+  .card h3{margin:0 0 4px;font-size:19px;}
+  .card .tools{color:var(--accent);font-size:13px;margin-bottom:10px;}
+  .card p{margin:0;color:var(--muted);font-size:15px;}
+  .card .go{display:inline-block;margin-top:12px;color:var(--accent2);font-size:14px;}
+  .skills{display:flex;flex-wrap:wrap;gap:8px;}
+  .skills span{background:var(--bg2);border:1px solid var(--border);padding:6px 14px;border-radius:16px;font-size:13px;}
+  footer{text-align:center;padding:30px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+<header>
+  <h1>Vitor Vieira Souza</h1>
+  <p>Analista de Dados — SQL · Power BI · ETL · Modelagem de Dados</p>
+  <div class="links">
+    <a href="mailto:vieiraviitor03@gmail.com">E-mail</a>
+    <a href="https://www.linkedin.com/in/vitor-vieira-93804219a/" target="_blank">LinkedIn</a>
+  </div>
+</header>
+
+<main>
+  <h2 class="section">Projetos — clique para ver o relatório completo</h2>
+
+  <a class="card" href="dashboard-financeiro.html">
+    <h3>Dashboard Financeiro / Bancário</h3>
+    <div class="tools">Power BI · DAX · Slicers</div>
+    <p>Painel executivo com indicadores de carteira, taxa de cancelamento e visão consolidada de resultados.</p>
+    <span class="go">Ver relatório completo →</span>
+  </a>
+
+  <a class="card" href="dashboard-volume.html">
+    <h3>Dashboard de Volume e Faturamento</h3>
+    <div class="tools">Power BI · Tabela Dinâmica</div>
+    <p>Análise operacional de volume e faturamento com cards de KPI e comparativos por período.</p>
+    <span class="go">Ver relatório completo →</span>
+  </a>
+
+  <a class="card" href="dashboard-comercial.html">
+    <h3>Dashboard Comercial</h3>
+    <div class="tools">SQL · Power BI · DAX · Modelagem de Dados</div>
+    <p>Modelagem relacional e view SQL própria para consolidar vendas, clientes e lucro. KPIs de receita, margem e performance por categoria e país.</p>
+    <span class="go">Ver relatório completo →</span>
+  </a>
+
+  <h2 class="section">Habilidades</h2>
+  <div class="skills">
+    <span>SQL</span><span>Power BI</span><span>DAX</span><span>Power Query</span>
+    <span>Excel Avançado</span><span>ETL</span><span>Python (aprendizado)</span>
+    <span>Modelagem de Dados</span>
+  </div>
+</main>
+
+<footer>Portfólio pessoal · atualizado conforme os projetos evoluem</footer>
+</body>
+</html>
